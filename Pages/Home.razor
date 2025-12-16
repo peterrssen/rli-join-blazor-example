@@ -10,15 +10,14 @@ else
 {
     <div class="flex-center">
         <div class="flex-column-center">
-            <p>Users</p>
-            <GenericTable TItem="User" Items="db.Users" />
+            <GenericTable Table="db.Tables[0]" />
         </div>
         <div class="flex-column-center">
-            <p>Orders</p>
-            <GenericTable TItem="Order" Items="db.Orders" />
+            <GenericTable Table="db.Tables[1]" />
         </div>
     </div>
-
+    
+  
     <div class="flex-center">
         <div class="flex-column-center size-limit" >
             <div class="box">
@@ -40,44 +39,36 @@ else
         </div>
     </div>
 
-    <div class="flex-center">
-        <GenericTable TItem="UserOrderJoin" Items="joinResult" />
-    </div>
+    @if (resultTable != null)
+    {
+        <div class="flex-center">
+            <GenericTable Table="resultTable" />
+        </div>
+    }
     
 }
 
 @code {
     Database? db;
-
-    private IEnumerable<UserOrderJoin> joinResult = Enumerable.Empty<UserOrderJoin>();
+    Table? resultTable;
 
     protected override async Task OnInitializedAsync()
     {
         db = await Http.GetFromJsonAsync<Database>("data/tableData.json");
     }
 
+    
     private void PerformLeftJoin()
     {
         if (db != null)
         {
-            joinResult = (from u in db.Users
-                       join o in db.Orders on u.Id equals o.UserId into userOrders
-                       from o in userOrders.DefaultIfEmpty()
-                       select new UserOrderJoin
-                       (
-                            u.Id,
-                            u.Name,
-                            u.Email,
-                            o?.Id,
-                            o?.UserId,
-                            o?.Product,
-                            o?.Price
-                       )).ToList();
+            resultTable = Database.DoLeftJoin(db.Tables[0], db.Tables[1]);
         }
     }
 
     private void PerformRightJoin()
     {
+        /*
         joinResult = (
             from o in db.Orders
             join u in db.Users on o.UserId equals u.Id into orderUsers
@@ -93,6 +84,6 @@ else
                 o.Price
             )).ToList();
             Console.WriteLine(joinResult);
+        */
     }
-
 }

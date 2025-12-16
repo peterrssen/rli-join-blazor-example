@@ -1,28 +1,33 @@
-@typeparam TItem
 @using System.Reflection
 
-@if (Items == null || !Items.Any())
+@if (Table == null)
 {
     <p>Keine Daten vorhanden.</p>
 }
 else
 {
+    @if (!string.IsNullOrEmpty(Table.Name))
+    {
+        <p><em>@Table.Name</em></p>
+    }
     <table border="1">
         <thead>
             <tr>
-                @foreach (var prop in Columns)
+                @foreach (var pair in Table.ColumnNames.Zip(Table.Colors))
                 {
-                    <th>@prop.Name</th>
+                    <th style="background-color:@pair.Second">
+                        @pair.First
+                    </th>
                 }
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Items)
+            @foreach (List<object> row in Table.Rows ?? Enumerable.Empty<object>())
             {
                 <tr>
-                    @foreach (var prop in Columns)
+                    @foreach (var cell in row)
                     {
-                        <td>@(prop.GetValue(item))</td>
+                        <td>@cell</td>
                     }
                 </tr>
             }
@@ -32,7 +37,5 @@ else
 
 @code {
     [Parameter]
-    public IEnumerable<TItem>? Items { get; set; }
-
-    private PropertyInfo[] Columns => typeof(TItem).GetProperties();
+    public Table? Table { get; set; }
 }
