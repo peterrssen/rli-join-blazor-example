@@ -1,0 +1,38 @@
+@typeparam TItem
+@using System.Reflection
+
+@if (Items == null || !Items.Any())
+{
+    <p>Keine Daten vorhanden.</p>
+}
+else
+{
+    <table border="1">
+        <thead>
+            <tr>
+                @foreach (var prop in Columns)
+                {
+                    <th>@prop.Name</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Items)
+            {
+                <tr>
+                    @foreach (var prop in Columns)
+                    {
+                        <td>@(prop.GetValue(item))</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public IEnumerable<TItem>? Items { get; set; }
+
+    private PropertyInfo[] Columns => typeof(TItem).GetProperties();
+}

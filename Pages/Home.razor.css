@@ -1,0 +1,45 @@
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    max-width: 200px;
+}
+
+.flex-center {
+    display: flex; 
+    gap: 10px;
+    padding-top: 10px;
+    justify-content: center;
+}
+
+.flex-column-center {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+}
+
+.size-limit {
+    max-width: 350px;
+  }
+
+.box {
+    border: 2px solid #000000; /* Blaue Umrandung */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}

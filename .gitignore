@@ -1,0 +1,31 @@
+# =========================
+# .NET / Blazor
+# =========================
+
+## Build-Ergebnisse
+bin/
+obj/
+
+## VS Code
+.vscode/
+
+## Publish / Artifacts
+publish/
+*.publishproj
+
+## Logs
+*.log
+
+## NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+
+## Environment
+.env
+.env.*
+
+## OS
+.DS_Store
+Thumbs.db

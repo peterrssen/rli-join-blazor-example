@@ -1,0 +1,98 @@
+﻿@page "/"
+@inject HttpClient Http
+@using RLI_JOIN_BLAZOR_EXAMPLE.Shared
+
+@if (db == null)
+{
+    <p>Lade Daten…</p>
+}
+else
+{
+    <div class="flex-center">
+        <div class="flex-column-center">
+            <p>Users</p>
+            <GenericTable TItem="User" Items="db.Users" />
+        </div>
+        <div class="flex-column-center">
+            <p>Orders</p>
+            <GenericTable TItem="Order" Items="db.Orders" />
+        </div>
+    </div>
+
+    <div class="flex-center">
+        <div class="flex-column-center size-limit" >
+            <div class="box">
+                <img src="img/left-join.png" />
+                <button @onclick="PerformLeftJoin">LEFT JOIN</button>
+            </div>
+        </div>
+        <div class="flex-column-center size-limit">
+            <div class="box">
+                <img src="img/right-join.png" />
+                <button @onclick="PerformRightJoin">RIGHT JOIN</button>
+            </div>
+        </div>
+        <div class="flex-column-center size-limit">
+            <div class="box">
+                <img src="img/inner-join.png" />
+                <button>INNER JOIN</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-center">
+        <GenericTable TItem="UserOrderJoin" Items="joinResult" />
+    </div>
+    
+}
+
+@code {
+    Database? db;
+
+    private IEnumerable<UserOrderJoin> joinResult = Enumerable.Empty<UserOrderJoin>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = await Http.GetFromJsonAsync<Database>("data/tableData.json");
+    }
+
+    private void PerformLeftJoin()
+    {
+        if (db != null)
+        {
+            joinResult = (from u in db.Users
+                       join o in db.Orders on u.Id equals o.UserId into userOrders
+                       from o in userOrders.DefaultIfEmpty()
+                       select new UserOrderJoin
+                       (
+                            u.Id,
+                            u.Name,
+                            u.Email,
+                            o?.Id,
+                            o?.UserId,
+                            o?.Product,
+                            o?.Price
+                       )).ToList();
+        }
+    }
+
+    private void PerformRightJoin()
+    {
+        joinResult = (
+            from o in db.Orders
+            join u in db.Users on o.UserId equals u.Id into orderUsers
+            from u in orderUsers.DefaultIfEmpty()
+            select new UserOrderJoin
+            (
+                u?.Id,
+                u?.Name,
+                u?.Email,
+                o.Id,
+                o.UserId,
+                o.Product,
+                o.Price
+            )).ToList();
+            Console.WriteLine(joinResult);
+    }
+
+}
