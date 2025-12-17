@@ -1,25 +1,26 @@
 {
   "tables": [
     {
-      "name": "users",
-      "columns": ["id", "name", "email"],
-      "colors": ["#ea6151","#ea6151","#ea6151"],
+      "name": "Tax Payers",
+      "columns": ["id", "first_name", "last_name", "mail"],
+      "colors": ["#ea6151","#ea6151","#ea6151","#ea6151"],
       "rows": [
-        [1, "Alice", "a@example.com"],
-        [2, "Bob", "b@example.com"],
-        [3, "Max", "b@example.com"],
-        [4, "Hans", "b@example.com"]
+        [1, "Alice", "Maier", "alice.maier@web.de"],
+        [2, "MacGyver", "Angus", "angust.macgyver@makeitwork.to"],
+        [3, "Max", "Power", "max.power@gmx.com"],
+        [4, "Malcom", "Reynolds", "mal.reynolds@serenity.de"]
       ]
     },
     {
-      "name": "orders",
-      "columns": ["id", "userId", "product", "price"],
-      "colors": ["#009879","#009879","#009879","#009879"],
+      "name": "Income Taxes",
+      "columns": ["id", "tax_payer_id", "year", "refund_in_eu"],
+      "colors": ["#009879","#009879","#009879","#009879","#009879"],
       "rows": [
-        [100, 1, "Laptop", 1200],
-        [101, 1, "Mouse", 100],
-        [102, 2, "Mouse", 25],
-        [102, 5, "Test", 25]
+        [100, 1, 2023, 543],
+        [101, 1, 2024, 1249],
+        [102, 2, 2024, 1985],
+        [102, 3, 2024, 341],
+        [102, 5, 1962, 0]
       ]
     }
   ]

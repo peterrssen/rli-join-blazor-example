@@ -103,12 +103,12 @@ public class Table
     public string? Name { get; set; }
     
     [JsonPropertyName("columns")]
-    public List<string?> ColumnNames { get; set; } = new List<string>();
+    public List<string?> ColumnNames { get; set; } = new List<string?>();
 
     [JsonPropertyName("colors")]
-    public List<string?> Colors { get; set; } = new List<string>();
+    public List<string?> Colors { get; set; } = new List<string?>();
 
     [JsonPropertyName("rows")]
-    public List<List<object?>> Rows { get; set; } = new List<List<object>>();
+    public List<List<object?>> Rows { get; set; } = new List<List<object?>>();
 
 }
