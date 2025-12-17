@@ -1,4 +1,4 @@
-# PhoneSystemApp
+# rli-join-blazor-example
 A page created in Blazor WebAssembly (WASM) to illustrate SQL joins (left, right, inner)
 
 <p align="center">
