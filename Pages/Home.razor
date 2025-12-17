@@ -22,19 +22,19 @@ else
         <div class="flex-column-center size-limit" >
             <div class="box">
                 <img src="img/left-join.png" />
-                <button @onclick="PerformLeftJoin">LEFT JOIN</button>
+                <button @onclick="() => Join(JoinType.Left)">LEFT JOIN</button>
             </div>
         </div>
         <div class="flex-column-center size-limit">
             <div class="box">
                 <img src="img/right-join.png" />
-                <button @onclick="PerformRightJoin">RIGHT JOIN</button>
+                <button @onclick="() => Join(JoinType.Right)">RIGHT JOIN</button>
             </div>
         </div>
         <div class="flex-column-center size-limit">
             <div class="box">
                 <img src="img/inner-join.png" />
-                <button>INNER JOIN</button>
+                <button @onclick="() => Join(JoinType.Inner)">INNER JOIN</button>
             </div>
         </div>
     </div>
@@ -58,32 +58,12 @@ else
     }
 
     
-    private void PerformLeftJoin()
+    private void Join(JoinType joinType)
     {
         if (db != null)
         {
-            resultTable = Database.DoLeftJoin(db.Tables[0], db.Tables[1]);
+            resultTable = Database.Join(db.Tables[0], db.Tables[1], joinType);
         }
     }
 
-    private void PerformRightJoin()
-    {
-        /*
-        joinResult = (
-            from o in db.Orders
-            join u in db.Users on o.UserId equals u.Id into orderUsers
-            from u in orderUsers.DefaultIfEmpty()
-            select new UserOrderJoin
-            (
-                u?.Id,
-                u?.Name,
-                u?.Email,
-                o.Id,
-                o.UserId,
-                o.Product,
-                o.Price
-            )).ToList();
-            Console.WriteLine(joinResult);
-        */
-    }
 }
